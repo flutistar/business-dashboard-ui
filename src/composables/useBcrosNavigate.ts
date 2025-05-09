@@ -75,6 +75,17 @@ export const useBcrosNavigate = () => {
   function goToTransactions () {
     redirect(config.public.authWebURL + `account/${account.currentAccount.id}/settings/transactions`)
   }
+  function goToDocumentRecordService (path: string, params?: { [key: string]: string }) {
+    const redirectURL = new URL(config.public.drsURL + path)
+    const businessId = business.currentBusiness?.identifier
+    if (businessId) {
+      redirectURL.searchParams.append('entityId', businessId.toString())
+    }
+    for (const [key, value] of Object.entries(params ?? {})) {
+      redirectURL.searchParams.append(key, value)
+    }
+    window.open(redirectURL, '_blank')
+  }
 
   return {
     goToAccountInfo,
@@ -93,6 +104,7 @@ export const useBcrosNavigate = () => {
     goToSetupAccount,
     goToTeamMembers,
     goToTransactions,
+    goToDocumentRecordService,
     redirect
   }
 }

@@ -36,7 +36,8 @@
         "consentToContinueOut": "Consent to Continue Out",
         "requestAgmExtension": "Request AGM Extension",
         "requestAgmLocationChange": "Request AGM Location Change",
-        "amalgamate": "Amalgamate"
+        "amalgamate": "Amalgamate",
+        "associatedDocuments": "Associated Documents"
       },
       "businessSummary": "Business Summary",
       "colinLink": "Manage this business in Corporate Online",
@@ -625,7 +626,8 @@
         "requestAgmLocationChange": "Request an AGM location change.",
         "isNotFrozenForAmalgamate": "This business is frozen and cannot be involved in an amalgamation.",
         "requirementsForAmalgamation": "This business has a future effective dissolution and cannot be involved in an amalgamation.",
-        "amalgamate": "Amalgamate with other businesses."
+        "amalgamate": "Amalgamate with other businesses.",
+        "associatedDocuments": "View documents associated with this business in the Document Record System."
       }
     },
     "filing": {

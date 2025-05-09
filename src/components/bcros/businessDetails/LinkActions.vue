@@ -6,9 +6,10 @@ import { FilingSubTypeE } from '~/enums/filing-sub-type-e'
 import { useBcrosDashboardActions } from '~/stores/dashboardActions'
 
 const { currentBusiness } = storeToRefs(useBcrosBusiness())
-const { goToDigitalCredentialsPage, goToFilingsUI } = useBcrosNavigate()
+const { goToDigitalCredentialsPage, goToFilingsUI, goToDocumentRecordService } = useBcrosNavigate()
 
 const { isAllowedToFile } = useBcrosBusiness()
+const { isStaffAccount } = useBcrosAccount()
 const { isButtonForActionVisible } = useBcrosDashboardActions()
 const { getStoredFlag } = useBcrosLaunchdarkly()
 const t = useNuxtApp().$i18n.t
@@ -19,6 +20,7 @@ interface MenuActionItem extends DropdownItem {
   showButton: boolean
   tooltip?: string
   name?: string
+  trailingIcon?: string
 }
 
 const param = { filingId: '0' }
@@ -118,6 +120,17 @@ const allActions: ComputedRef<Array<MenuActionItem>> = computed(() => {
           ? t('tooltip.tombstone.menuAction.isNotFrozenForAmalgamate')
           : t('tooltip.tombstone.menuAction.amalgamate'),
       name: 'amalgamate'
+    },
+    { // <!-- Associated Documents -->
+      showButton: isStaffAccount && getStoredFlag('enable-document-records'),
+      disabled: false,
+      label: t('button.tombstone.menuAction.associatedDocuments'),
+      click: () => {
+        goToDocumentRecordService('/document-management')
+      },
+      tooltip: t('tooltip.tombstone.menuAction.associatedDocuments'),
+      trailingIcon: 'i-mdi-open-in-new',
+      name: 'associatedDocuments'
     }]
 })
 
@@ -160,6 +173,7 @@ const actions: ComputedRef<Array<Array<MenuActionItem>>> = computed(() => {
           :label="item.label"
           :disabled="item.disabled"
           :data-cy="'button.' + item.name"
+          :trailing-icon="item.trailingIcon"
           class="w-full text-nowrap disabled:opacity-50"
           @click.stop="item.click"
         />
@@ -168,6 +182,7 @@ const actions: ComputedRef<Array<Array<MenuActionItem>>> = computed(() => {
         <UButton
           variant="ghost"
           :label="item.label"
+          :trailing-icon="item.trailingIcon"
           class="w-full text-nowrap"
           @click.stop="item.click"
         />
